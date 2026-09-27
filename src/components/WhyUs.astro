@@ -1,0 +1,27 @@
+---
+import { site } from '../data/site';
+import ServiceIcon from './icons/ServiceIcons.astro';
+---
+
+<section id="advantages" class="py-16 sm:py-20 bg-white">
+  <div class="container-main">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="section-title">Почему выбирают нас</h2>
+      <p class="section-subtitle">Работаем честно и прозрачно — без скрытых платежей и лишних работ</p>
+    </div>
+
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        site.advantages.map((item) => (
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-dark text-brand-accent">
+              <ServiceIcon name={item.icon} class="h-8 w-8" />
+            </div>
+            <h3 class="text-lg font-semibold text-brand-dark">{item.title}</h3>
+            <p class="mt-2 text-sm text-brand-muted leading-relaxed">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

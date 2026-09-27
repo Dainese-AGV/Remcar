@@ -1,0 +1,164 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const seoTitle = site.seo.title;
+const seoDescription = site.seo.description;
+
+const {
+  title = seoTitle,
+  description = seoDescription,
+} = Astro.props;
+
+const siteOrigin = Astro.site ?? new URL(site.siteUrl);
+const pagePath = Astro.url.pathname === '/' ? '' : Astro.url.pathname.replace(/\/$/, '');
+const canonicalURL = new URL(pagePath || '/', siteOrigin);
+
+const ogImageUrl = new URL(site.seo.ogImage, canonicalURL).href;
+const keywords = site.seo.keywords.join(', ');
+
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${canonicalURL.origin}/#website`,
+      url: canonicalURL.origin,
+      name: site.name,
+      description: seoDescription,
+      inLanguage: 'ru-BY',
+      publisher: { '@id': `${canonicalURL.origin}/#business` },
+    },
+    {
+      '@type': ['AutoRepair', 'LocalBusiness'],
+      '@id': `${canonicalURL.origin}/#business`,
+      name: site.name,
+      alternateName: site.legalName,
+      description: seoDescription,
+      url: canonicalURL.origin,
+      telephone: site.phoneMain.tel,
+      email: site.email,
+      taxID: site.unp,
+      image: ogImageUrl,
+      logo: new URL('/favicon.svg', canonicalURL).href,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: site.address.street,
+        addressLocality: site.city,
+        postalCode: '220021',
+        addressCountry: 'BY',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: site.address.lat,
+        longitude: site.address.lon,
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '19:00',
+        },
+      ],
+      priceRange: '$$',
+      areaServed: {
+        '@type': 'City',
+        name: site.city,
+      },
+      sameAs: [site.messengers.telegram],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="ru-BY">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={site.legalName} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="yandex" content="index, follow" />
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <meta name="geo.region" content="BY-MI" />
+    <meta name="geo.placename" content={site.city} />
+    <meta name="geo.position" content={`${site.address.lat};${site.address.lon}`} />
+    <meta name="ICBM" content={`${site.address.lat}, ${site.address.lon}`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:locale" content="ru_BY" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline} в ${site.cityIn}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {
+      site.seo.yandexVerification && (
+        <meta name="yandex-verification" content={site.seo.yandexVerification} />
+      )
+    }
+    {
+      site.seo.googleVerification && (
+        <meta name="google-site-verification" content={site.seo.googleVerification} />
+      )
+    }
+
+    <meta name="theme-color" content="#1e293b" />
+    <meta name="format-detection" content="telephone=yes" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+
+    {
+      site.yandexMetrikaId && (
+        <>
+          <script
+            is:inline
+            set:html={`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${site.yandexMetrikaId},'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});`}
+          />
+          <noscript>
+            <div>
+              <img
+                src={`https://mc.yandex.ru/watch/${site.yandexMetrikaId}`}
+                style="position:absolute; left:-9999px;"
+                alt=""
+              />
+            </div>
+          </noscript>
+        </>
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

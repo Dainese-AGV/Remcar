@@ -1,0 +1,43 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-slate-200/60 bg-white/80 py-10 backdrop-blur-sm">
+  <div class="container-main">
+    <div class="grid gap-8 sm:grid-cols-3">
+      <div>
+        <div class="text-lg font-bold text-brand-dark tracking-tight">{site.name}</div>
+        <p class="mt-2 text-sm text-brand-muted">{site.tagline} · {site.city}</p>
+      </div>
+
+      <div>
+        <div class="font-semibold text-brand-dark mb-3">Контакты</div>
+        <div class="space-y-2 text-sm">
+          <a href={`tel:${site.phoneMain.tel}`} class="block text-brand-muted hover:text-brand-accent transition-colors">
+            {site.phoneMain.display} — {site.phoneMain.note}
+          </a>
+          <a href={site.messengers.telegram} target="_blank" rel="noopener noreferrer" class="block text-brand-muted hover:text-brand-accent transition-colors">
+            {site.phoneTelegram.display} — {site.phoneTelegram.note}
+          </a>
+          <div class="text-brand-muted">{site.address.full}</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="font-semibold text-brand-dark mb-3">Навигация</div>
+        <nav class="space-y-2 text-sm" aria-label="Подвал">
+          <a href="#promo" class="block text-brand-muted hover:text-brand-accent transition-colors">Акция — антикор</a>
+          <a href="#services" class="block text-brand-muted hover:text-brand-accent transition-colors">Услуги</a>
+          <a href="#advantages" class="block text-brand-muted hover:text-brand-accent transition-colors">О нас</a>
+          <a href="#callback" class="block text-brand-muted hover:text-brand-accent transition-colors">Заказать звонок</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="mt-8 border-t border-slate-100 pt-6 text-center text-sm text-brand-muted">
+      © {year} {site.legalName}, УНП {site.unp}. Все права защищены.
+    </div>
+  </div>
+</footer>

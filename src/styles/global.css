@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-dark: #1e293b;
+  --color-brand-accent: #f97316;
+  --color-brand-accent-hover: #ea580c;
+  --color-brand-bg: #f0f4f8;
+  --color-brand-surface: #ffffff;
+  --color-brand-text: #334155;
+  --color-brand-muted: #64748b;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-brand-text font-sans antialiased;
+    background-color: var(--color-brand-bg);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(249, 115, 22, 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 50%, rgba(148, 163, 184, 0.12), transparent),
+      radial-gradient(ellipse 50% 30% at 0% 80%, rgba(148, 163, 184, 0.1), transparent);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-brand-dark sm:text-4xl tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply mt-3 text-lg text-brand-muted;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-accent px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-brand-accent-hover focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border-2 border-brand-dark bg-white px-6 py-3 text-base font-semibold text-brand-dark transition-colors hover:bg-brand-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-dark focus:ring-offset-2;
+  }
+
+  .card {
+    @apply rounded-2xl bg-brand-surface p-6 shadow-sm ring-1 ring-slate-200/50 transition-shadow hover:shadow-md;
+  }
+}

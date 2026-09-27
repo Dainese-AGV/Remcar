@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+import ServiceIcon from './icons/ServiceIcons.astro';
+---
+
+<section id="services" class="py-16 sm:py-20">
+  <div class="container-main">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="section-title">Наши услуги</h2>
+      <p class="section-subtitle">Ремонт и обслуживание легковых автомобилей, антикоррозийная обработка</p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        site.services.map((service) => (
+          <div class="card group flex h-full flex-col">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent transition-colors group-hover:bg-brand-accent group-hover:text-white">
+              <ServiceIcon name={service.icon} class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-semibold text-brand-dark">{service.title}</h3>
+            <p class="mt-2 flex-1 text-sm text-brand-muted leading-relaxed">{service.description}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="#callback" class="btn-primary">Узнать стоимость ремонта</a>
+    </div>
+  </div>
+</section>
