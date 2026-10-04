@@ -52,6 +52,13 @@ if (mb_strlen($comment) > 1000) {
     exit;
 }
 
+$consent = $input['consent'] ?? false;
+if ($consent !== true) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Consent required']);
+    exit;
+}
+
 // Rate limit по IP
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $rateFile = sys_get_temp_dir() . '/sto_callback_' . md5($ip) . '.json';
@@ -82,6 +89,7 @@ $message .= "Телефон: {$phone}\n";
 if ($comment) {
     $message .= "Комментарий: {$comment}\n";
 }
+$message .= "\nСогласие на обработку и передачу в Telegram: да";
 $message .= "\n" . date('d.m.Y H:i');
 
 $telegramOk = sendTelegram($config, $message);
@@ -147,6 +155,7 @@ function sendEmail(array $config, string $name, string $phone, string $comment):
     if ($comment) {
         $body .= "Комментарий: {$comment}\n";
     }
+    $body .= "\nСогласие на обработку и передачу в Telegram: да";
     $body .= "\nДата: " . date('d.m.Y H:i');
 
     $headers = "From: {$from}\r\nContent-Type: text/plain; charset=UTF-8";

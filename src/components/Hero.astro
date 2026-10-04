@@ -2,26 +2,33 @@
 import { site } from '../data/site';
 ---
 
-<section class="relative overflow-hidden text-white">
+<section class="relative overflow-x-clip text-white">
   <div class="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(249,115,22,0.15),transparent_55%)]" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(148,163,184,0.12),transparent_50%)]" aria-hidden="true"></div>
 
   <div class="container-main relative py-16 sm:py-24 lg:py-28">
-    <div class="grid items-start gap-12 lg:grid-cols-2">
-      <div>
-        <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-slate-200 backdrop-blur-sm">
-          <span class="h-2 w-2 rounded-full bg-brand-accent animate-pulse"></span>
-          Пн–Пт, 9:00–19:00 · {site.address.street}
+    <div class="grid min-w-0 items-start gap-12 lg:grid-cols-2">
+      <div class="min-w-0">
+        <div class="mb-4 inline-flex max-w-full items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-slate-200">
+          <span class="h-2 w-2 shrink-0 rounded-full bg-brand-accent animate-pulse"></span>
+          <span class="min-w-0 leading-snug">
+            <span>Пн–Пт, 9:00–19:00</span>
+            <span class="mx-1 hidden sm:inline" aria-hidden="true">·</span>
+            <span class="max-sm:block">{site.address.street}</span>
+          </span>
         </div>
 
-        <h1 class="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl tracking-tight">
+        <h1 class="max-w-full text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl tracking-tight">
           {site.tagline}
           <span class="block text-slate-200 mt-2 text-3xl sm:text-4xl font-semibold">в {site.cityIn}</span>
         </h1>
 
         <p class="mt-6 text-lg text-slate-300 leading-relaxed max-w-lg">
           {site.slogan}
+        </p>
+        <p class="mt-3 text-base text-slate-300 leading-relaxed max-w-lg">
+          {site.brandsNote}
         </p>
 
         <div class="mt-8 flex flex-wrap gap-4">
@@ -40,14 +47,13 @@ import { site } from '../data/site';
         </div>
       </div>
 
-      <div class="relative">
+      <div class="relative min-w-0">
         <a href="#promo" class="block group h-full">
-          <div class="h-full rounded-2xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur-sm transition group-hover:bg-white/15">
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">{site.promo.badge}</span>
-            <p class="mt-2 text-2xl font-bold">{site.promo.title}</p>
+          <div class="h-full rounded-2xl bg-white/10 p-6 ring-1 ring-white/15 transition group-hover:bg-white/15">
+            <p class="text-2xl font-bold">{site.promo.title}</p>
             <p class="mt-2 text-slate-300 text-sm">{site.promo.subtitle}</p>
             <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-accent group-hover:gap-2 transition-all">
-              Подробнее об акции
+              Подробнее об обработке
               <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </span>
           </div>
